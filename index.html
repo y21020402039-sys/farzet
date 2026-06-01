@@ -2,60 +2,62 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>WhatsApp</title>
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
             background-color: #0b141a;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            color: #e9edef;
+            height: -webkit-fill-available;
             overflow: hidden;
         }
 
-        /* Telefon Ekranı Simülasyonu */
+        /* Birebir Orijinal WhatsApp Arayüzü */
         .phone-container {
             width: 100%;
-            max-width: 420px;
+            max-width: 450px;
             height: 100vh;
+            height: -webkit-fill-available;
             background-color: #0b141a;
-            /* WhatsApp Arka Plan Duvar Kağıdı Efekti */
             background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
             background-blend-mode: overlay;
-            opacity: 0.95;
+            background-size: cover;
+            opacity: 0.98;
             display: flex;
             flex-direction: column;
             position: relative;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
         }
 
-        /* WhatsApp Üst Bar (Header) */
+        /* Gerçekçi Üst Bar */
         .whatsapp-header {
             background-color: #202c33;
-            padding: 10px 16px;
+            padding: 10px 14px;
             display: flex;
             align-items: center;
             height: 60px;
-            border-bottom: 1px solid #2f3b43;
             z-index: 10;
         }
 
         .back-icon {
+            color: #00a884;
+            font-size: 22px;
             margin-right: 8px;
-            color: #aebac1;
-            font-size: 20px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
         }
 
+        /* Yuvarlak Profil Fotoğrafı Alanı */
         .avatar {
             width: 40px;
             height: 40px;
@@ -65,92 +67,123 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-weight: bold;
+            font-weight: 600;
             color: #fff;
-            font-size: 18px;
+            font-size: 16px;
+            background-image: linear-gradient(135deg, #718096, #4a5568);
         }
 
         .user-info {
             flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .user-name {
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 500;
             color: #e9edef;
+            line-height: 1.2;
         }
 
         .user-status {
             font-size: 12px;
             color: #8696a0;
             margin-top: 2px;
-            height: 15px;
+            transition: color 0.3s ease;
         }
 
-        /* Sohbet Alanı */
+        /* Sağ Üst İkonlar (Kamera ve Arama) */
+        .header-icons {
+            display: flex;
+            gap: 20px;
+            color: #aebac1;
+            font-size: 18px;
+            padding-right: 5px;
+        }
+
+        /* Boş Mesaj Alanı */
         .chat-container {
             flex: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
+            padding: 16px;
             overflow-y: auto;
         }
 
-        /* WhatsApp Mesaj Balonu (Giden Mesaj Taslağı Tarzı) */
-        .message-bubble {
-            background-color: #005c4b;
-            color: #e9edef;
-            padding: 8px 12px;
-            border-radius: 8px;
-            max-width: 85%;
-            align-self: flex-end;
-            font-size: 15px;
-            line-height: 1.4;
-            position: relative;
-            box-shadow: 0 1px 0.5px rgba(0,0,0,0.13);
-            white-space: pre-wrap;
-            word-break: break-word;
-            margin-top: 10px;
-            display: none; /* İlk başta gizli, yazma bitince görünecek */
-        }
-
-        /* Alt Yazma Alanı (Input Bar) */
+        /* Gerçekçi WhatsApp Alt Giriş Paneli */
         .input-container {
-            background-color: #202c33;
-            padding: 10px;
+            background-color: #0b141a; /* WhatsApp iOS tarzı şeffaf geçişli dip */
+            padding: 8px 10px 24px 10px; /* Telefon alt barı için mükemmel boşluk */
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             gap: 8px;
             z-index: 10;
         }
 
+        /* Sol taraftaki artı/ekle butonu */
+        .add-icon {
+            color: #aebac1;
+            font-size: 24px;
+            padding-bottom: 6px;
+            cursor: pointer;
+        }
+
+        /* Mesaj Giriş Balonu */
         .input-bar {
             background-color: #2a3942;
             flex: 1;
-            border-radius: 8px;
-            padding: 10px 12px;
+            border-radius: 24px;
+            padding: 9px 12px;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             min-height: 40px;
+            max-height: 120px;
         }
 
+        /* Gerçek Yazı Alanı */
         .typewriter-input {
-            font-size: 15px;
+            font-size: 16px;
             color: #e9edef;
             flex: 1;
             white-space: pre-wrap;
             word-break: break-word;
-            line-height: 1.4;
+            line-height: 1.3;
+            outline: none;
+            max-height: 100px;
+            overflow-y: auto;
         }
 
-        /* Yanıp Sönen Mavi/Açık Renkli WhatsApp İmleci */
+        /* Sağ taraftaki kamera simgesi */
+        .camera-icon {
+            color: #8696a0;
+            font-size: 18px;
+            margin-left: 8px;
+            padding-bottom: 2px;
+            cursor: pointer;
+        }
+
+        /* Yeşil Yuvarlak Ses/Gönder Butonu */
+        .mic-icon {
+            color: #fff;
+            width: 40px;
+            height: 40px;
+            background-color: #00a884;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 16px;
+            flex-shrink: 0;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            transition: background-color 0.2s ease;
+        }
+
+        /* Gerçek Yanıp Sönen WhatsApp İmleci */
         .cursor {
             display: inline-block;
             width: 2px;
-            height: 17px;
+            height: 18px;
             background-color: #00a884;
-            margin-left: 2px;
+            margin-left: 1px;
             animation: blink 0.8s infinite;
             vertical-align: middle;
         }
@@ -159,18 +192,6 @@
             0%, 100% { opacity: 1; }
             50% { opacity: 0; }
         }
-
-        .mic-icon {
-            color: #8696a0;
-            width: 40px;
-            height: 40px;
-            background-color: #2a3942;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 18px;
-        }
     </style>
 </head>
 <body>
@@ -178,42 +199,43 @@
 <div class="phone-container">
     <!-- Üst Bar -->
     <div class="whatsapp-header">
-        <span class="back-icon">←</span>
+        <span class="back-icon">‹</span>
         <div class="avatar">D</div>
         <div class="user-info">
             <div class="user-name">derinim</div>
             <div class="user-status" id="status">çevrimiçi</div>
         </div>
+        <div class="header-icons">
+            <span>📹</span>
+            <span>📞</span>
+        </div>
     </div>
 
-    <!-- Sohbet Alanı -->
-    <div class="chat-container">
-        <!-- Gönderilen mesajlar bittikten sonra buraya düşebilir (opsiyonel) -->
-        <div class="message-bubble" id="sent-message"></div>
-    </div>
+    <!-- Sohbet Alanı (Boş kalacak) -->
+    <div class="chat-container"></div>
 
-    <!-- Alt Input/Yazma Alanı -->
+    <!-- Alt Klavye/Yazma Alanı -->
     <div class="input-container">
+        <span class="add-icon">＋</span>
         <div class="input-bar">
             <div class="typewriter-input" id="input-text"></div><span class="cursor" id="cursor"></span>
+            <span class="camera-icon">📷</span>
         </div>
-        <div class="mic-icon" id="action-btn">🎤</div>
+        <div class="mic-icon" id="action-btn">🎙️</div>
     </div>
 </div>
 
 <script>
-    // Yazılıp silinecek olan o derin cümlelerin sırasıyla listesi
-    const "derinim" = "derinim";
+    // Yazılıp silinecek dertli cümleler
     const steps = [
         { text: "beni üzdüğün gün sana sarılıp ağlamıştım hatırlıyor musun?", action: "typeAndClear" },
-        { text: "aktif olmanı beklediğim dakikalarda yarım saat bekledim sonra çıktım gezdim ama seni sürekli saniyelerle kaçırdım kafamı yatağa vurasım geliyor sanki kapındayım da kafamı çevirdiğim an evden çıkıyorsun ve seni göremiyorum sana o kadar çok yazmak istiyorum ki ama yazamıyorum o yazıyı yazdığım günün ertesi sabahı düşünmeye başladım iki gündür doğru düzenli uyuyamıyorum aklımda sen olunca hep böyle oluyor yazamıyorum çünkü reddedeceksin gibi hissediyorum sana yazıp reddedilmek istemiyorum galiba senin kapında bekleyip kafamı çevirdiğimde seni görememeyi sana yazıp istemiyorum cevabını almaya tercih ederim belki bir gün denk düşeriz diye düşünüyorum zaten uyuyamıyorum gidip gelip sana bakıyorum belki görürüm diye", action: "typeAndClear" },
-        { text: "müsait olduğunda tekrar sarılabilir miyim sana? ", action: "typeAndKeep" } // En son cümle yazılı kalacak
+        { text: "aktif olmanı beklediğim dakikalarda yarım saat bekledim sonra çıktım gezdim ama seni sürekli saniyelerle kaçırdım kafamı yatağa vurasım geliyor sanki kapındayım da kafamı çevirdiğim an evden çıkıyorsun ve seni göremiyorum sana o kadar çok yazmak istiyorum ki ama yazamıyorum o yazıyı yazdığım günün ertesi sabahı düşünmeye başladım iki gündür doğru düzgün uyuyamıyorum aklımda sen olunca hep böyle oluyor yazamıyorum çünkü reddedeceksin gibi hissediyorum sana yazıp reddedilmek istemiyorum galiba senin kapında bekleyip kafamı çevirdiğimde seni görememeyi sana yazıp istemiyorum cevabını almaya tercih ederim belki bir gün denk düşeriz diye düşünüyorum zaten uyuyamıyorum gidip gelip sana bakıyorum belki görürüm diye", action: "typeAndClear" },
+        { text: "müsait olduğunda tekrar sarılabilir miyiz buluşup? ", action: "typeAndKeep" }
     ];
 
     const inputTextContainer = document.getElementById("input-text");
     const statusText = document.getElementById("status");
     const actionBtn = document.getElementById("action-btn");
-    const messageBubble = document.getElementById("sent-message");
 
     let stepIndex = 0;
 
@@ -221,60 +243,56 @@
         if (stepIndex < steps.length) {
             let currentStep = steps[stepIndex];
             
-            // Sen yazmaya başladığında yukarıda "yazıyor..." bilgisi çıkacak kanka
+            // Gerçekçi "yazıyor..." durumu
             statusText.innerText = "yazıyor...";
             statusText.style.color = "#00a884"; 
 
             typeText(currentStep.text, 0, () => {
-                // Yazma bittiğinde yukarıdaki durum normale döner
+                // Yazma bitince normale döner
                 statusText.innerText = "çevrimiçi";
                 statusText.style.color = "#8696a0";
 
                 if (currentStep.action === "typeAndClear") {
-                    // 2 saniye yazılı beklesin, sonra silmeye başlasın
+                    // Cümle bitince 2.5 saniye ekranda kalıp öyle silinsin (okunabilsin diye)
                     setTimeout(() => {
-                        statusText.innerText = "çevrimiçi";
                         deleteText(() => {
                             stepIndex++;
-                            setTimeout(runWhatsappSimulation, 1000); // Diğer cümleye geçmeden önce 1 sn bekle
+                            setTimeout(runWhatsappSimulation, 800);
                         });
-                    }, 2000);
+                    }, 2500);
                 } else if (currentStep.action === "typeAndKeep") {
-                    // En son cümle bitince sağ alttaki mikrofon simgesi yeşil gönder butonuna dönüşür
-                    actionBtn.innerText = "🕊️";
-                    actionBtn.style.color = "#00a884";
-                    // İstersen son cümle bittikten sonra ekranda balon olarak kalmasını sağlayabiliriz.
+                    // En son cümle bitince buton gönder ikonuna döner
+                    actionBtn.innerText = "➤";
+                    actionBtn.style.backgroundColor = "#00a884";
                 }
             });
         }
     }
 
-    // Harf harf yazdırma fonksiyonu
     function typeText(text, charIndex, callback) {
         if (charIndex < text.length) {
             inputTextContainer.innerText += text.charAt(charIndex);
-            // WhatsApp yazma hızını taklit etmek için hafif değişken hız
-            let dynamicSpeed = 50 + Math.random() * 40; 
+            // İnsansı, değişken yazma hızı
+            let dynamicSpeed = 40 + Math.random() * 45; 
             setTimeout(() => typeText(text, charIndex + 1, callback), dynamicSpeed);
         } else {
             callback();
         }
     }
 
-    // Harf harf silme fonksiyonu
     function deleteText(callback) {
         let text = inputTextContainer.innerText;
         if (text.length > 0) {
             inputTextContainer.innerText = text.substring(0, text.length - 1);
-            setTimeout(() => deleteText(callback), 25); // Silme işlemi klavyede hızlıca basıp tutma gibi seri olur
+            setTimeout(() => deleteText(callback), 15); // Silme hızı klavye seriliği gibi akıcı
         } else {
             callback();
         }
     }
 
-    // Telefon açıldıktan 1.5 saniye sonra simülasyon başlasın
+    // Sayfa yüklenince 1 saniye bekleyip simülasyonu başlatır
     window.onload = () => {
-        setTimeout(runWhatsappSimulation, 1500);
+        setTimeout(runWhatsappSimulation, 1000);
     };
 </script>
 
