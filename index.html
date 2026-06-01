@@ -9,7 +9,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -23,51 +23,63 @@
             overflow: hidden;
         }
 
-        /* Ana Telefon Ekranı */
+        /* Tüm Ekranı Karartacak Karartma Katmanı */
+        .fade-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000000;
+            opacity: 0;
+            z-index: 100;
+            pointer-events: none;
+            transition: opacity 2.5s ease-in-out;
+        }
+
+        /* Ana Telefon Kapsayıcısı */
         .phone-container {
             width: 100%;
             max-width: 430px;
             height: 100vh;
             height: -webkit-fill-available;
             background-color: #0b141a;
-            background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
-            background-blend-mode: overlay;
-            background-size: cover;
+            /* Görseldeki gibi koyu, net WhatsApp dokusu */
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><g fill="%23111b21" fill-opacity="0.15"><path d="M10 10h10v10H10zm20 20h10v10H30zm20 20h10v10H50zM70 10h10v10H70zM10 60h10v10H10z"/></g></svg>');
+            background-size: 60px 60px;
             display: flex;
             flex-direction: column;
             position: relative;
         }
 
-        /* Görseldeki Birebir Üst Bar */
+        /* Birebir iOS WhatsApp Üst Bar */
         .whatsapp-header {
             background-color: #1f2c34;
-            padding: 10px 12px;
+            padding: 10px 14px;
             display: flex;
             align-items: center;
-            height: 64px;
+            height: 60px;
             z-index: 10;
         }
 
         .back-icon {
             color: #00a884;
-            font-size: 26px;
+            font-size: 28px;
             margin-right: 4px;
             cursor: pointer;
             font-weight: 300;
+            line-height: 1;
         }
 
         .avatar {
-            width: 38px;
-            height: 38px;
-            background: linear-gradient(135deg, #533542, #3b232e);
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #472b38, #2d1822);
             border-radius: 50%;
             margin-right: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
             font-weight: 600;
-            color: #ff8fa3;
-            font-size: 15px;
+            color: #ff9ebb;
+            font-size: 14px;
         }
 
         .user-info {
@@ -88,18 +100,24 @@
             margin-top: 1px;
         }
 
+        /* iOS Sağ Üst İkonlar */
         .header-icons {
             display: flex;
             gap: 22px;
             color: #00a884;
-            font-size: 22px;
-            padding-right: 4px;
+            align-items: center;
         }
 
-        /* Sohbet İçeriği Alanı (Görseldeki Balonlar) */
+        .icon-svg {
+            fill: #00a884;
+            width: 22px;
+            height: 22px;
+        }
+
+        /* Sohbet Bölümü ve Görseldeki Orijinal Balonlar */
         .chat-container {
             flex: 1;
-            padding: 12px;
+            padding: 14px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
@@ -110,11 +128,11 @@
         .date-divider {
             background-color: #182229;
             color: #8696a0;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 11.5px;
+            padding: 5px 12px;
+            border-radius: 7px;
+            font-size: 11px;
             font-weight: 600;
-            margin-top: 10px;
+            margin-top: 6px;
         }
 
         .system-warning {
@@ -122,48 +140,52 @@
             color: #ffd279;
             padding: 8px 14px;
             border-radius: 10px;
-            font-size: 12px;
+            font-size: 11.5px;
             line-height: 1.4;
             text-align: center;
-            max-width: 92%;
+            max-width: 95%;
         }
 
         .system-info-bubble {
             background-color: #111b21;
             color: #8696a0;
             padding: 6px 16px;
-            border-radius: 8px;
-            font-size: 12px;
+            border-radius: 8.5px;
+            font-size: 11.5px;
             text-align: center;
             max-width: 85%;
-            box-shadow: 0 1px 1px rgba(0,0,0,0.1);
         }
 
-        /* Mesaj Giriş Alanı */
+        /* Giriş Paneli Alt Kısım */
         .input-container {
             background-color: #1f2c34;
-            padding: 6px 8px;
+            padding: 7px 8px;
             display: flex;
-            align-items: center;
-            gap: 8px;
+            align-items: flex-end;
+            gap: 10px;
             z-index: 10;
         }
 
         .add-icon {
             color: #00a884;
-            font-size: 28px;
-            font-weight: 300;
+            font-size: 32px;
+            font-weight: 200;
+            line-height: 0.7;
+            padding-bottom: 5px;
             cursor: pointer;
         }
 
+        /* Mesaj Giriş Balonu - Taşma Sorununu Çözen Ayar */
         .input-bar {
             background-color: #2a3942;
             flex: 1;
             border-radius: 18px;
-            padding: 6px 12px;
+            padding: 8px 12px;
             display: flex;
-            align-items: center;
-            min-height: 34px;
+            align-items: flex-end;
+            min-height: 36px;
+            max-height: 110px; /* Maksimum genişleyeceği sınır */
+            overflow: hidden;
         }
 
         .typewriter-input {
@@ -173,36 +195,46 @@
             white-space: pre-wrap;
             word-break: break-word;
             outline: none;
+            max-height: 94px; 
+            overflow-y: auto; /* Çok uzarsa kendi içinde kayacak */
+            line-height: 1.35;
+            padding-right: 4px;
         }
 
+        /* Sağ Giriş İkonları */
         .right-input-icons {
             display: flex;
             gap: 14px;
-            color: #00a884;
-            font-size: 18px;
+            align-items: center;
+            padding-bottom: 6px;
+        }
+        
+        .right-input-icons svg {
+            fill: #00a884;
+            width: 20px;
+            height: 20px;
         }
 
-        /* iOS Klavye Simülasyonu */
+        /* BİREBİR iPHONE KOYU MOD KLAVYESİ */
         .ios-keyboard {
-            background-color: #1e1e1e;
+            background-color: #161616;
             width: 100%;
-            padding: 4px 2px 12px 2px;
+            padding: 4px 3px 28px 3px; /* Gerçek iPhone alt bar boşluğu */
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
             z-index: 10;
-            border-top: 1px solid #2d2d2d;
         }
 
         .keyboard-row {
             display: flex;
             justify-content: center;
             width: 100%;
-            gap: 4px;
+            gap: 5px;
         }
 
         .key {
-            background-color: #3b3b3d;
+            background-color: #2d2d2e;
             color: #ffffff;
             flex: 1;
             height: 42px;
@@ -211,46 +243,48 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 400;
             position: relative;
-            box-shadow: 0 1px 0 rgba(0,0,0,0.3);
+            box-shadow: 0 1px 0px rgba(0,0,0,0.3);
         }
 
         .key.special {
-            background-color: #282829;
-            font-size: 14px;
+            background-color: #1c1c1e;
+            font-size: 15px;
             max-width: none;
         }
         
         .key.space {
             flex: 5;
             max-width: none;
+            font-size: 15px;
+            color: #b0b0b0;
         }
 
-        /* Tuşa basıldığında büyüme efekti (Pop-up) */
+        /* Tuş Büyüme Pop-up Efekti */
         .key.pressed::after {
             content: attr(data-key);
             position: absolute;
-            top: -45px;
+            top: -46px;
             left: 50%;
             transform: translateX(-50%);
-            width: 50px;
-            height: 55px;
-            background-color: #3b3b3d;
+            width: 48px;
+            height: 52px;
+            background-color: #2d2d2e;
             color: #fff;
-            border-radius: 8px;
+            border-radius: 6px;
             display: flex;
             justify-content: center;
             align-items: top;
-            padding-top: 6px;
+            padding-top: 5px;
             font-size: 26px;
-            font-weight: 500;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+            font-weight: 400;
+            box-shadow: 0 -2px 8px rgba(0,0,0,0.4);
             z-index: 20;
         }
 
-        /* Gerçekçi WhatsApp İmleci */
+        /* Gerçekçi İnce WhatsApp İmleci */
         .cursor {
             display: inline-block;
             width: 2px;
@@ -269,8 +303,10 @@
 </head>
 <body>
 
+<div class="fade-overlay" id="fadeLayer"></div>
+
 <div class="phone-container">
-    <!-- Üst Bar (Görseldeki Birebir Detaylar) -->
+    <!-- Üst Bar -->
     <div class="whatsapp-header">
         <span class="back-icon">‹</span>
         <div class="avatar">D</div>
@@ -279,12 +315,12 @@
             <div class="user-status">zul. online heute um 12:08 PM</div>
         </div>
         <div class="header-icons">
-            <span>📹</span>
-            <span>📞</span>
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55-.45 1-1 1h12c.55 0 group-1-.45-1-1v-3.5l4 4v-11l-4 4z"/></svg>
+            <svg class="icon-svg" viewBox="0 0 24 24"><path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.57a1.003 1.003 0 0 0-1.01.24l-1.92 1.92c-2.82-1.44-5.17-3.79-6.61-6.62l1.92-1.92c.28-.28.35-.67.24-1.02-1.11-3.53-1.31-4.72-1.31-5.95 0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
         </div>
     </div>
 
-    <!-- Sohbet Alanı (Görseldeki Sistem Mesajları) -->
+    <!-- Sohbet Alanı (Görseldeki Balonlar) -->
     <div class="chat-container">
         <div class="date-divider">Heute</div>
         <div class="system-warning">
@@ -296,20 +332,23 @@
         <div class="system-info-bubble">Du blockierst diese Person nicht mehr.</div>
     </div>
 
-    <!-- Mesaj Alanı -->
+    <!-- Mesaj Paneli -->
     <div class="input-container">
         <span class="add-icon">＋</span>
         <div class="input-bar">
             <div class="typewriter-input" id="input-text"></div><span class="cursor"></span>
         </div>
         <div class="right-input-icons">
-            <span>🗂️</span>
-            <span>📷</span>
-            <span>🎙️</span>
+            <!-- Gerçek Sayfa/Belge İkonu -->
+            <svg viewBox="0 0 24 24"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+            <!-- Gerçek Kamera İkonu -->
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9zm3 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+            <!-- Gerçek Mikrofon İkonu -->
+            <svg viewBox="0 0 24 24"><path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></svg>
         </div>
     </div>
 
-    <!-- Canlı iOS Klavye Tasarımı -->
+    <!-- iPhone Klavyesi -->
     <div class="ios-keyboard">
         <div class="keyboard-row">
             <div class="key" data-key="q">q</div><div class="key" data-key="w">w</div><div class="key" data-key="e">e</div><div class="key" data-key="r">r</div><div class="key" data-key="t">t</div><div class="key" data-key="y">y</div><div class="key" data-key="u">u</div><div class="key" data-key="ı">ı</div><div class="key" data-key="o">o</div><div class="key" data-key="p">p</div>
@@ -318,7 +357,7 @@
             <div class="key" data-key="a">a</div><div class="key" data-key="s">s</div><div class="key" data-key="d">d</div><div class="key" data-key="f">f</div><div class="key" data-key="g">g</div><div class="key" data-key="h">h</div><div class="key" data-key="j">j</div><div class="key" data-key="k">k</div><div class="key" data-key="l">l</div><div class="key" data-key="ş">ş</div>
         </div>
         <div class="keyboard-row">
-            <div class="key special">⇧</div><div class="key" data-key="z">z</div><div class="key" data-key="x">x</div><div class="key" data-key="c">c</div><div class="key" data-key="v">v</div><div class="key" data-key="b">b</div><div class="key" data-key="n">n</div><div class="key" data-key="m">m</div><div class="key font-size:14px;" data-key="ç">ç</div><div class="key special">⌫</div>
+            <div class="key special">⇧</div><div class="key" data-key="z">z</div><div class="key" data-key="x">x</div><div class="key" data-key="c">c</div><div class="key" data-key="v">v</div><div class="key" data-key="b">b</div><div class="key" data-key="n">n</div><div class="key" data-key="m">m</div><div class="key" data-key="ç">ç</div><div class="key special" data-key="⌫">⌫</div>
         </div>
         <div class="keyboard-row">
             <div class="key special">123</div><div class="key special">🌐</div><div class="key space" data-key=" ">space</div><div class="key special">aç</div>
@@ -330,23 +369,36 @@
     const steps = [
         { text: "beni üzdüğün gün sana sarılıp ağlamıştım hatırlıyor musun?", action: "typeAndClear" },
         { text: "aktif olmanı beklediğim dakikalarda yarım saat bekledim sonra çıktım gezdim ama seni sürekli saniyelerle kaçırdım kafamı yatağa vurasım geliyor sanki kapındayım da kafamı çevirdiğim an evden çıkıyorsun ve seni göremiyorum sana o kadar çok yazmak istiyorum ki ama yazamıyorum o yazıyı yazdığım günün ertesi sabahı düşünmeye başladım iki gündür doğru düzgün uyuyamıyorum aklımda sen olunca hep böyle oluyor yazamıyorum çünkü reddedeceksin gibi hissediyorum sana yazıp reddedilmek istemiyorum galiba senin kapında bekleyip kafamı çevirdiğimde seni görememeyi sana yazıp istemiyorum cevabını almaya tercih ederim belki bir gün denk düşeriz diye düşünüyorum zaten uyuyamıyorum gidip gelip sana bakıyorum belki görürüm diye", action: "typeAndClear" },
-        { text: "müsait olduğunda yine sarılabilir miyiz buluşup? ", action: "typeAndKeep" }
+        { text: "yine sana sarılabilir miyim her zaman ki yerimizde buluşup? ", action: "finalStyle" }
     ];
 
     const inputTextContainer = document.getElementById("input-text");
+    const fadeLayer = document.getElementById("fadeLayer");
     let stepIndex = 0;
 
-    function runWhatsappSimulation() {
+    function runSimulation() {
         if (stepIndex < steps.length) {
             let currentStep = steps[stepIndex];
+            
             typeText(currentStep.text, 0, () => {
                 if (currentStep.action === "typeAndClear") {
                     setTimeout(() => {
-                        deleteText(() => {
+                        deleteText(20, () => { // İlk iki cümleyi hızlıca silsin
                             stepIndex++;
-                            setTimeout(runWhatsappSimulation, 800);
+                            setTimeout(runSimulation, 800);
                         });
-                    }, 3000); // Okumak için 3 saniye dursun
+                    }, 2800);
+                } else if (currentStep.action === "finalStyle") {
+                    // Son cümle yazıldıktan sonra 3.5 saniye ekranda kalır
+                    setTimeout(() => {
+                        // YAVAŞÇA SİLME BAŞLIYOR (Hız 140ms yapıldı, çok daha yavaş)
+                        deleteText(140, () => {
+                            // Silme tamamen bittikten sonra ekran kararacak
+                            setTimeout(() => {
+                                fadeLayer.style.opacity = "1";
+                            }, 500);
+                        });
+                    }, 3500);
                 }
             });
         }
@@ -356,41 +408,43 @@
         if (charIndex < text.length) {
             let char = text.charAt(charIndex);
             inputTextContainer.innerText += char;
+            
+            // Otomatik olarak input alanını aşağı kaydırır (Taşmayı önler)
+            inputTextContainer.scrollTop = inputTextContainer.scrollHeight;
 
-            // Klavyede ilgili tuşu bul ve basılma efektini tetikle
             triggerKeyAnimation(char.toLowerCase());
 
-            let dynamicSpeed = 45 + Math.random() * 50; 
+            let dynamicSpeed = 45 + Math.random() * 45; 
             setTimeout(() => typeText(text, charIndex + 1, callback), dynamicSpeed);
         } else {
             callback();
         }
     }
 
-    function deleteText(callback) {
+    function deleteText(speed, callback) {
         let text = inputTextContainer.innerText;
         if (text.length > 0) {
             inputTextContainer.innerText = text.substring(0, text.length - 1);
-            triggerKeyAnimation("⌫"); // Silme tuşu efekti
-            setTimeout(() => deleteText(callback), 20);
+            inputTextContainer.scrollTop = inputTextContainer.scrollHeight;
+            triggerKeyAnimation("⌫");
+            setTimeout(() => deleteText(speed, callback), speed);
         } else {
             callback();
         }
     }
 
     function triggerKeyAnimation(char) {
-        let targetChar = char === " " ? " " : char;
-        let keys = document.querySelectorAll(`.key[data-key="${targetChar}"]`);
-        if(char === "⌫") keys = document.querySelectorAll('.key:last-child'); // Silme tuşu eşleşmesi
-
+        let keyChar = char === " " ? " " : char;
+        let keys = document.querySelectorAll(`.key[data-key="${keyChar}"]`);
+        
         keys.forEach(key => {
             key.classList.add('pressed');
-            setTimeout(() => key.classList.remove('pressed'), 70);
+            setTimeout(() => key.classList.remove('pressed'), 75);
         });
     }
 
     window.onload = () => {
-        setTimeout(runWhatsappSimulation, 1200);
+        setTimeout(runSimulation, 1200);
     };
 </script>
 
